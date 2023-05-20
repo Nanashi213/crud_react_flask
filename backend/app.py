@@ -1,6 +1,5 @@
 import json
 from flask import Flask, jsonify, request
-from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
 #LOGIN
 from flask_jwt_extended import create_access_token,get_jwt,get_jwt_identity, \
@@ -8,7 +7,7 @@ from flask_jwt_extended import create_access_token,get_jwt,get_jwt_identity, \
 from datetime import datetime, timedelta, timezone
 
 #MODULOS
-from modulo1.products import setup_routes
+from modulo1.products import setup_routes as setup_routes_products
 from settings import db
 
 app = Flask(__name__)
@@ -55,7 +54,7 @@ def logout():
     unset_jwt_cookies(response)
     return response
 
-setup_routes(app)
+setup_routes_products(app)
 
 if __name__ == '__main__':
     with app.app_context():
