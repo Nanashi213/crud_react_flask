@@ -13,34 +13,26 @@ Primero, vamos a instalar el backend. Abre un terminal y navega hasta la carpeta
 ```bash
 cd backend
 A continuación, crea un entorno virtual con Python:
-
-bash
 py -m venv env
+
 Activa el entorno virtual:
-
-bash
 ./env/Scripts/activate
+
 Instala las dependencias necesarias para el proyecto (asegúrate de tener un archivo requirements.txt):
-
-bash
 pip install -r requirements.txt
-Finalmente, inicia el servidor Flask (asegúrate de tener un archivo app.py o main.py):
 
-bash
+Finalmente, inicia el servidor Flask (asegúrate de tener un archivo app.py o main.py):
 python app.py
 ```
 ### Frontend
 En otro terminal, navega hasta la carpeta frontend:
 ```
-bash
 cd frontend
 Instala las dependencias necesarias para el proyecto:
-
-bash
 npm install
-Finalmente, inicia la aplicación React:
 
-bash
+Finalmente, inicia la aplicación React:
 npm start
+
 Ahora deberías poder ver la aplicación en funcionamiento en tu navegador web en http://localhost:3000.
 ```
