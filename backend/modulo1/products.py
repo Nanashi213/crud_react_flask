@@ -2,10 +2,14 @@ from flask import request, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.utils import secure_filename
 from flask import send_from_directory
+from flask_jwt_extended import create_access_token,get_jwt,get_jwt_identity, \
+							   unset_jwt_cookies, jwt_required, JWTManager
 import uuid
 import os
+import sys
+sys.path.append('..')
+from settings import db
 
-db = SQLAlchemy()
 
 class Product(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -23,30 +27,31 @@ class Product(db.Model):
         }
 
 def setup_routes(app):
-    @app.route('/products', methods=['GET', 'POST'])
-    def handle_products():
-        if request.method == 'POST':
-            name = request.form['name']
-            price = float(request.form['price'])
-            description = request.form['description']
-            image = request.files['image']
-
-            filename = secure_filename(image.filename)
-            _, ext = os.path.splitext(image.filename)  # Obtiene la extensión del archivo
-            unique_filename = f"{uuid.uuid4().hex}{ext}"  # Genera un nombre de archivo único
-            image.save(os.path.join(app.config['UPLOAD_FOLDER'], unique_filename))
-
-            product = Product(name=name, price=price, description=description, image=unique_filename)
-            db.session.add(product)
-            db.session.commit()
+    @app.route('/products', methods=['GET'])
+    def get_products():
+        products = Product.query.all()
+        return jsonify([product.to_dict() for product in products])
     
-            return jsonify(product.to_dict())
+    @app.route('/products', methods=['POST'])
+    @jwt_required() 
+    def create_product():
+        name = request.form['name']
+        price = float(request.form['price'])
+        description = request.form['description']
+        image = request.files['image']
 
-        elif request.method == 'GET':
-            products = Product.query.all()
-            return jsonify([product.to_dict() for product in products])
+        _, ext = os.path.splitext(image.filename)  # Obtiene la extensión del archivo
+        unique_filename = f"{uuid.uuid4().hex}{ext}"  # Genera un nombre de archivo único
+        image.save(os.path.join(app.config['UPLOAD_FOLDER'], unique_filename))
+
+        product = Product(name=name, price=price, description=description, image=unique_filename)
+        db.session.add(product)
+        db.session.commit()
+
+        return jsonify(product.to_dict())
 
     @app.route('/products/<id>', methods=['GET', 'PUT', 'DELETE'])
+    @jwt_required() 
     def handle_product(id):
         product = Product.query.get(id)
         
