@@ -37,12 +37,10 @@ cd frontend
 Instala las dependencias necesarias para el proyecto:
 
 bash
-Copy code
 npm install
 Finalmente, inicia la aplicación React:
 
 bash
-Copy code
 npm start
 Ahora deberías poder ver la aplicación en funcionamiento en tu navegador web en http://localhost:3000.
 ```
