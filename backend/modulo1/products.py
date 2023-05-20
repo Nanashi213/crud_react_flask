@@ -4,8 +4,10 @@ from werkzeug.utils import secure_filename
 from flask import send_from_directory
 import uuid
 import os
+import sys
+sys.path.append('..')
+from settings import db
 
-db = SQLAlchemy()
 
 class Product(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -31,7 +33,7 @@ def setup_routes(app):
             description = request.form['description']
             image = request.files['image']
 
-            filename = secure_filename(image.filename)
+
             _, ext = os.path.splitext(image.filename)  # Obtiene la extensión del archivo
             unique_filename = f"{uuid.uuid4().hex}{ext}"  # Genera un nombre de archivo único
             image.save(os.path.join(app.config['UPLOAD_FOLDER'], unique_filename))
