@@ -28,9 +28,10 @@ Finalmente, inicia el servidor Flask (asegúrate de tener un archivo app.py o ma
 
 bash
 python app.py
-Frontend
+```
+### Frontend
 En otro terminal, navega hasta la carpeta frontend:
-
+```
 bash
 cd frontend
 Instala las dependencias necesarias para el proyecto:
@@ -44,4 +45,4 @@ bash
 Copy code
 npm start
 Ahora deberías poder ver la aplicación en funcionamiento en tu navegador web en http://localhost:3000.
-
+```
