@@ -1,8 +1,6 @@
 import React from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
-import { Container} from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import Login from './components/Login.js'
 import Main from './pages/Main.js'
 import Home from './pages/Home.js'
 import useToken from './components/useToken.js'
